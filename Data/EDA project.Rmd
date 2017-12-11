@@ -15,13 +15,33 @@ library('dplyr')
 library('reshape2')
 library('ggplot2')
 library('data.table')
+library('tidyverse')
 #library('leaps')
 #library('minpack.lm')
 #library('xts')
 ```
 
-Read in data
+## Read in data
 ```{r}
-diversity_data <- fread("EDA_Data.csv", header = TRUE)
+diversity_data <- fread("EDA_Data.csv", header = TRUE) %>%
+ filter(count != "na") %>%
+ transform(counts = as.numeric(count))
+
 ```
+
+## Race percentage per job
+```{r}
+by_race <- diversity_data %>%
+ select(race, company, job_category, counts)%>%
+ filter(!is.na(counts), !is.na(race), job_category!="Totals",job_category!="Previous_totals",race!="Overall_totals") %>%
+ group_by(race, company,job_category) %>%
+ summarise(counts = sum(counts))
+
+ggplot(data=by_race) + 
+  geom_bar(mapping=aes(x= job_category, y= counts, fill=race),stat="identity",position="fill") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 0)) + 
+  coord_flip() +
+  labs(title="Race percentage in each job category", y = "Percentage", x = "Job category")
+```
+
 
