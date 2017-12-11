@@ -1,0 +1,59 @@
+---
+title: "Visualiztion Draft"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+project_dir <- getwd()
+setwd(project_dir)
+
+library('plyr')
+#library('bit64')
+library('dplyr')
+library('reshape2')
+library('ggplot2')
+library('data.table')
+#library('leaps')
+#library('minpack.lm')
+#library('xts')
+```
+
+Read in data
+```{r}
+diversity_data <- fread(file.path(project_dir, "Data/EDA_Data.csv"), header = TRUE) %>% 
+  mutate(count = as.numeric(count)) %>% 
+  mutate(race = as.factor(race)) %>% 
+  mutate(gender = as.factor(gender))
+```
+
+```{r}
+# View(diversity_data)
+```
+
+
+# Percentage Race in Each Company   
+```{r}
+by_race <- diversity_data %>%
+ select(race, company, job_category, count) %>%
+ filter(!is.na(count), !is.na(race), job_category!="Totals",job_category!="Previous_totals",race!="Overall_totals") %>%
+ group_by(race, company,job_category) %>%
+ summarise(count = sum(count))
+
+# ggplot(data=by_race) + geom_bar(mapping=aes(x= company, y= count, fill=race),stat="identity",position="fill") + theme(axis.text.x = element_text(angle = 90, hjust = 0)) + coord_flip() +labs(title="Percentage by race in each job category", y = "Percentage", x = "Job category")
+
+ggplot(data=by_race) + geom_bar(mapping=aes(x= company, y= count, fill=race),stat="identity",position="fill") + theme(axis.text.x = element_text(angle = 90, hjust = 0)) + labs(title="Percentage by race in each job category", y = "Percentage", x = "Job category")
+
+
+# 
+# ggplot(data=by_race) + geom_bar(mapping=aes(y= company, x= count, fill=race),stat="identity",position="fill") + theme(axis.text.x = element_text(angle = 90, hjust = 0)) + coord_flip() +labs(title="Percentage by race in each job category", y = "Percentage", x = "Job category")
+```
+
+
+
+

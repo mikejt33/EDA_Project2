@@ -1,0 +1,16 @@
+---
+title: "Diversity in Silicon Valley"
+author: "Xiaotai Chai, Fanny Chow, Michael McCormick"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#put finished plots AND ALNALYSIS hereeeeee, we can compile and an
+
+```{r}
+
+```
+
