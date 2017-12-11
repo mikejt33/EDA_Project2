@@ -1,0 +1,27 @@
+---
+title: "EDA project"
+author: "Xiaotai Chai"
+date: "12/11/2017"
+output: html_document
+---
+## Load in packages
+```{r}
+project_dir <- getwd()
+setwd(project_dir)
+
+library('plyr')
+#library('bit64')
+library('dplyr')
+library('reshape2')
+library('ggplot2')
+library('data.table')
+#library('leaps')
+#library('minpack.lm')
+#library('xts')
+```
+
+Read in data
+```{r}
+diversity_data <- fread("EDA_Data.csv", header = TRUE)
+```
+
