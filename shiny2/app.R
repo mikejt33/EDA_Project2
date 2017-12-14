@@ -86,7 +86,7 @@ server <- function(input, output) {
   output$race <- renderPlot({
     
     filtered <- job_data %>%
-      select(gender, counts, company, job_category) %>%
+      select(gender, counts, company, job_category, race) %>%
       filter(!(counts == 0)) %>%
       filter(company == input$companyInput)
     
