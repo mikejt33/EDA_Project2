@@ -14,7 +14,7 @@ job_data <- data %>%
 
 
 ui <- fluidPage(
-                titlePanel("Our Amazing App Part 2"),
+                titlePanel("Diversity in Silicon Valley"),
                  sidebarLayout(
                    sidebarPanel(selectInput("companyInput","Companies:",
                                             choices = unique(job_data[["company"]])),
@@ -36,18 +36,22 @@ server <- function(input, output) {
   output$stat <- renderPlot({
     
     ggplot(job_data, aes(x = job_category, y = counts, fill=gender)) +
-      geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley")
+      geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley") +
+      theme(axis.text.x = element_text(angle = 30, size = 15))
     
     ggplot(job_data, aes(x = gender, y = counts, fill=gender)) +
-      geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley")
+      geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley") +
+      theme(axis.text.x = element_text(angle = 30, size = 15))
     
     ggplot(job_data, aes(x = company, y = counts, fill = gender)) +
       geom_bar(stat = 'identity', position=position_dodge()) + 
-      ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company")
+      ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company") +
+      theme(axis.text.x = element_text(angle = 30, size = 15))
     
     ggplot(job_data, aes(x = race, y = counts, fill = gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + 
-      ggtitle("Breakdown of Race by Gender") + ylab("Counts") + xlab("Race")
+      ggtitle("Breakdown of Race by Gender") + ylab("Counts") + xlab("Race")+
+      theme(axis.text.x = element_text(angle = 30, size = 15))
   })
   output$jobs <- renderPlot({
     
@@ -57,7 +61,8 @@ server <- function(input, output) {
       filter(company == input$companyInput)
     
     ggplot(filtered, aes(x = job_category, y = counts, fill=gender)) +
-      geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley")
+      geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley")+
+      theme(axis.text.x = element_text(angle = 30, size = 15))
     
   })
   output$cool <- renderPlot({
@@ -67,7 +72,8 @@ server <- function(input, output) {
       filter(company == input$companyInput)
     
     ggplot(filtered, aes(x = gender, y = counts, fill=gender)) +
-      geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley")
+      geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley")+
+      theme(axis.text.x = element_text(angle = 30, size = 15, face = "bold"), plot.title= element_text(size=30))
     
   })
   
@@ -80,7 +86,8 @@ server <- function(input, output) {
     
     ggplot(filtered, aes(x = company, y = counts, fill = gender)) +
       geom_bar(stat = 'identity', position=position_dodge()) + 
-      ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company")
+      ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company")+
+      theme(axis.text.x = element_text(face="bold", angle = 15, size = 20))
   })
   
   output$race <- renderPlot({
@@ -92,7 +99,8 @@ server <- function(input, output) {
     
     ggplot(filtered, aes(x = race, y = counts, fill = gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + 
-      ggtitle("Breakdown of Race by Race") + ylab("Counts") + xlab("Race")
+      ggtitle("Breakdown of Race by Gender") + ylab("Counts") + xlab("Race")+
+      theme(axis.text.x = element_text(angle = 30, size = 15, face="bold"))
   })
 
 }
