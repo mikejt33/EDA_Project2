@@ -30,7 +30,7 @@ race_data <- data %>%
 #                   br(),
 #                   "Store",
 #                   strong("prices"))
-ui <- fluidPage(
+ui <- fluidPage( theme = "bootstrap.css",
   titlePanel("Our Amazing App"),
   sidebarLayout(
     sidebarPanel(selectInput("companyInput","Companies:",
@@ -46,8 +46,14 @@ ui <- fluidPage(
                  
                  selectInput("raceInput","Race:",
                              choices = unique(race_data[["race"]])),
-                 helpText("List of all the races")),
-    
+                 helpText("List of all the races"),
+                 sliderInput("slide", "Distribution by company",
+                             min = 0,
+                             max = 22,
+                             value = 0,
+                             step = 1,
+                             width = "100%")),
+
     mainPanel((
       tabsetPanel(type = "tabs",
         tabPanel("Gender", plotOutput("cool")),
@@ -117,19 +123,21 @@ server <- function(input, output) {
     select(lat,lng,name) %>%
     filter(name == input$companyInput)
   
-  map <- get_map(location = "San Francisco", zoom =7)
+  map <- get_map(location = "San Francisco", zoom = 7)
+  
+  ggmap(map) + geom_point(data = fitered, mapping = aes(x = lng, y = lat), color = "red") + scale_y_continuous() + scale_x_continuous()
    # 
    # mapPoint <- ggmap(map) + ggplot(fitered,aes(x = lng, y = lat))
    #   geom_point(size = 2, shape = 19)
    # mapPoint
    # 
-  
-  map <- get_map(location= c(lon = fitered$lng, lat = fitered$lat), zoom = 10)
-  
-  ggmap(map) + geom_point(data = fitered, aes(x = 122.079070, y= 37.395354))
-   ggmap(map,
-         ggplot(data = fitered, aes(x = 122.079070, y = 37.395354, label = name))+
-           geom_point(fill = "blue", alpha = 0.8, size =5, shape = 21) + geom_text())
+  # 
+  # map <- get_map(location= c(lon = fitered$lng, lat = fitered$lat), zoom = 10)
+  # 
+  # ggmap(map) + geom_point(data = fitered, aes(x = "122.079070", y= 37.395354))
+  #  ggmap(map,
+  #        ggplot(data = fitered, aes(x = 122.079070, y = 37.395354, label = name))+
+  #          geom_point(fill = "blue", alpha = 0.8, size =5, shape = 21) + geom_text())
   
   })
 }
