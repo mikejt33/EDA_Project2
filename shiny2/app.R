@@ -37,21 +37,21 @@ server <- function(input, output) {
     
     ggplot(job_data, aes(x = job_category, y = counts, fill=gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley") +
-      theme(axis.text.x = element_text(angle = 30, size = 15))
+      theme(axis.text.x = element_text(angle = 30, size = 20))
     
     ggplot(job_data, aes(x = gender, y = counts, fill=gender)) +
       geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley") +
-      theme(axis.text.x = element_text(angle = 30, size = 15))
+      theme(axis.text.x = element_text(angle = 30, size = 20))
     
     ggplot(job_data, aes(x = company, y = counts, fill = gender)) +
       geom_bar(stat = 'identity', position=position_dodge()) + 
       ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company") +
-      theme(axis.text.x = element_text(angle = 30, size = 15))
+      theme(axis.text.x = element_text(angle = 30, size = 20))
     
     ggplot(job_data, aes(x = race, y = counts, fill = gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + 
       ggtitle("Breakdown of Race by Gender") + ylab("Counts") + xlab("Race")+
-      theme(axis.text.x = element_text(angle = 30, size = 15))
+      theme(axis.text.x = element_text(angle = 30, size = 10))
   })
   output$jobs <- renderPlot({
     
@@ -62,7 +62,7 @@ server <- function(input, output) {
     
     ggplot(filtered, aes(x = job_category, y = counts, fill=gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + ggtitle("Breakdown of Job Category in Silicon Valley")+
-      theme(axis.text.x = element_text(angle = 30, size = 15))
+      theme(axis.text.x = element_text(angle = 30, size = 20))
     
   })
   output$cool <- renderPlot({
@@ -73,7 +73,7 @@ server <- function(input, output) {
     
     ggplot(filtered, aes(x = gender, y = counts, fill=gender)) +
       geom_bar(stat = 'identity') + ggtitle("Breakdown of Gender Employment in Silicon Valley")+
-      theme(axis.text.x = element_text(angle = 30, size = 15, face = "bold"), plot.title= element_text(size=30))
+      theme(axis.text.x = element_text(angle = 30, size = 20, face = "bold"), plot.title= element_text(size=30))
     
   })
   
@@ -87,7 +87,7 @@ server <- function(input, output) {
     ggplot(filtered, aes(x = company, y = counts, fill = gender)) +
       geom_bar(stat = 'identity', position=position_dodge()) + 
       ggtitle("Breakdown of Gender by Company") + ylab("Employee Count") + xlab("Company")+
-      theme(axis.text.x = element_text(face="bold", angle = 15, size = 20))
+      theme(axis.text.x = element_text(face="bold", angle = 10, size = 20))
   })
   
   output$race <- renderPlot({
@@ -100,7 +100,7 @@ server <- function(input, output) {
     ggplot(filtered, aes(x = race, y = counts, fill = gender)) +
       geom_bar(stat = 'identity',position=position_dodge()) + 
       ggtitle("Breakdown of Race by Gender") + ylab("Counts") + xlab("Race")+
-      theme(axis.text.x = element_text(angle = 30, size = 15, face="bold"))
+      theme(axis.text.x = element_text(angle = 30, size = 10, face="bold"))
   })
 
 }
